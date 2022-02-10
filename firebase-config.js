@@ -1,6 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApp, getApps } from 'firebase/app';
-import { addDoc, getFirestore, collection } from 'firebase/firestore';
+import {
+  addDoc,
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+} from 'firebase/firestore';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -76,4 +83,43 @@ const updateProfileName = async (name) => {
   return result;
 };
 
-export { auth, signIn, onAuthStateChanged, signOut, signUp, updateProfileName };
+const createPost = async (userOwner, post) => {
+  let result = false;
+  try {
+    const docRef = await addDoc(collection(db, 'posts'), {
+      postOwner: userOwner,
+      post: post,
+      timestamp: new Date(),
+    });
+    result = true;
+    console.log('Document written with ID: ', docRef.id);
+  } catch {
+    console.error('Error adding document: ', e);
+  }
+  return result;
+};
+
+const getDataFromDoc = async (docName) => {
+  const collections = [];
+  const querySnapshot = await getDocs(collection(db, docName));
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, ' => ', doc.data());
+    collections.push({
+      ...doc.data(),
+      timestamp: new Date(doc.data()?.timestamp?.seconds).toString(),
+      postId: doc.id,
+    });
+  });
+  return collections;
+};
+
+export {
+  auth,
+  signIn,
+  onAuthStateChanged,
+  signOut,
+  signUp,
+  updateProfileName,
+  createPost,
+  getDataFromDoc,
+};
