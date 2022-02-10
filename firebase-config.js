@@ -68,10 +68,12 @@ const signUp = (email, password, displayName, cb) => {
 };
 
 const updateProfileName = async (name) => {
-  const res = await updateProfile(auth?.currentUser, {
+  let result = false;
+  await updateProfile(auth?.currentUser, {
     displayName: name,
   });
-  console.log('res updateProfile: ', res);
+  result = true;
+  return result;
 };
 
 export { auth, signIn, onAuthStateChanged, signOut, signUp, updateProfileName };

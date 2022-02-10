@@ -50,7 +50,9 @@ const Register = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={() => handleSignIn()}>sign in</button>
+      <button onClick={() => handleSignIn()}>sign up</button>
+      <br />
+      <button onClick={() => router.push('/login')}>back to login page</button>
       {loading && 'loading....'}
     </div>
   );
