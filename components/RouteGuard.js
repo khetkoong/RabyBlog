@@ -12,7 +12,10 @@ const RouteGuard = ({ children }) => {
 
   useEffect(() => {
     // on initial load - run auth check
-    authCheck(router.asPath);
+    const unsub = authCheck(router.asPath);
+    return () => {
+      unsub;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -24,7 +27,6 @@ const RouteGuard = ({ children }) => {
     try {
       const unSub = onAuthStateChanged(auth, (currentUser) => {
         if (!currentUser && !publicPaths.includes(path)) {
-          console.log('redirect login');
           router.push('/login');
         } else {
           setUser(currentUser);

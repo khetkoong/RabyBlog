@@ -108,7 +108,7 @@ const getDataFromDoc = async (docName) => {
   const q = query(docRef, orderBy('timestamp', 'desc'));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
+    // console.log(doc.id, ' => ', doc.data());
     const date = doc.data()?.timestamp?.seconds.toString();
     const newDate = `${date}000`;
     collections.push({
