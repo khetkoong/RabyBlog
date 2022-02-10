@@ -15,6 +15,8 @@ const Dashboard = () => {
       });
   };
 
+  // if (!user) return 'loading...';
+
   return (
     <>
       <br />

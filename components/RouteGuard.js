@@ -6,7 +6,7 @@ import { onAuthStateChanged, auth } from '../firebase-config';
 const RouteGuard = ({ children }) => {
   const router = useRouter();
   const AuthContext = useAuthContext();
-  const { setUser, setMainLoading } = AuthContext;
+  const { setUser } = AuthContext;
 
   useEffect(() => {
     // on initial load - run auth check
@@ -16,7 +16,6 @@ const RouteGuard = ({ children }) => {
 
   function authCheck(url) {
     // redirect to login page if accessing a private page and not logged in
-    setMainLoading(true);
     const publicPaths = [];
     const path = url.split('?')[0];
     try {
@@ -31,8 +30,6 @@ const RouteGuard = ({ children }) => {
       return unSub;
     } catch (error) {
       console.log('on Auth error: ', error);
-    } finally {
-      setMainLoading(false);
     }
   }
 

@@ -12,14 +12,18 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
 
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     if (user) {
       router.push('/dashboard');
     }
-  }, []);
+    setLoading(false);
+  }, [user]);
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       const { user } = await signIn(email, password);
       setUser(user);
@@ -27,6 +31,8 @@ export default function LoginPage() {
     } catch (error) {
       console.log('error signIn: ', error?.message);
       setError(error?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,7 +51,9 @@ export default function LoginPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={() => handleLogin()}>login</button>
+      <button disabled={loading} onClick={() => handleLogin()}>
+        {loading ? 'loading...' : 'login'}
+      </button>
       <br />
       <button onClick={() => router.push('/register')}>register</button>
       {!!error && error}
