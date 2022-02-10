@@ -1,30 +1,18 @@
-import { signOut } from '../firebase-config';
 import { useAuthContext } from '../components/AuthContext';
+import { useRouter } from 'next/dist/client/router';
 
 const Dashboard = () => {
   const AuthContext = useAuthContext();
   const { user, setUser } = AuthContext;
-
-  const handleSignOut = async () => {
-    signOut()
-      .then(() => {
-        setUser(null);
-      })
-      .catch((error) => {
-        console.log('sign out error : ', error);
-      });
-  };
-
-  // if (!user) return 'loading...';
+  const router = useRouter();
 
   return (
     <>
-      <br />
-      dashboard <button onClick={() => handleSignOut()}>logout</button>
+      dashboard
       <br />
       email: {user?.email}
       <br />
-      name: {user?.displayName}
+      name: {user?.displayName || '-'}
     </>
   );
 };

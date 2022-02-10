@@ -11,13 +11,15 @@ import {
 } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_MEASUREMENTID,
+  apiKey: 'AIzaSyDPqu_dWvqMbFRfvRWbOCnYkbwtgaHMBW8',
+  authDomain: 'khet-aabba.firebaseapp.com',
+  databaseURL:
+    'https://khet-aabba-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'khet-aabba',
+  storageBucket: 'khet-aabba.appspot.com',
+  messagingSenderId: '973136242528',
+  appId: '1:973136242528:web:a3858d0a90cd3ed534a005',
+  measurementId: 'G-FLJ73ST17K',
 };
 
 // Initialize Firebase
@@ -65,4 +67,11 @@ const signUp = (email, password, displayName, cb) => {
     });
 };
 
-export { auth, signIn, onAuthStateChanged, signOut, signUp };
+const updateProfileName = async (name) => {
+  const res = await updateProfile(auth?.currentUser, {
+    displayName: name,
+  });
+  console.log('res updateProfile: ', res);
+};
+
+export { auth, signIn, onAuthStateChanged, signOut, signUp, updateProfileName };

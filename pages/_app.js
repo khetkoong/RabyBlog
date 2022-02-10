@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
         <AuthContext.Provider value={authData}>
           <RouteGuard>
             <Navbar>
-              <Component {...pageProps} />
+              <Component user={user} {...pageProps} />
             </Navbar>
           </RouteGuard>
         </AuthContext.Provider>
