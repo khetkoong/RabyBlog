@@ -104,9 +104,11 @@ const getDataFromDoc = async (docName) => {
   const querySnapshot = await getDocs(collection(db, docName));
   querySnapshot.forEach((doc) => {
     console.log(doc.id, ' => ', doc.data());
+    const date = doc.data()?.timestamp?.seconds.toString();
+    const newDate = `${date}000`;
     collections.push({
       ...doc.data(),
-      timestamp: new Date(doc.data()?.timestamp?.seconds).toString(),
+      timestamp: new Date(+newDate).toString(),
       postId: doc.id,
     });
   });
