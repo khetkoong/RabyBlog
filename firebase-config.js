@@ -7,6 +7,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
+  limit,
+  orderBy,
 } from 'firebase/firestore';
 import {
   getAuth,
@@ -101,7 +104,9 @@ const createPost = async (userOwner, post) => {
 
 const getDataFromDoc = async (docName) => {
   const collections = [];
-  const querySnapshot = await getDocs(collection(db, docName));
+  const docRef = collection(db, docName);
+  const q = query(docRef, orderBy('timestamp', 'desc'));
+  const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     console.log(doc.id, ' => ', doc.data());
     const date = doc.data()?.timestamp?.seconds.toString();
