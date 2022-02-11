@@ -19,22 +19,6 @@ function MyApp({ Component, pageProps }) {
     setM(true);
   }, []);
 
-  // useEffect(() => {
-  //   const handleStart = () => {
-  //     setMainLoading(true);
-  //   };
-  //   const handleStop = () => {
-  //     setMainLoading(false);
-  //   };
-  //   router.events.on('routeChangeStart', handleStart);
-  //   router.events.on('routeChangeComplete', handleStop);
-
-  //   return () => {
-  //     router.events.off('routeChangeStart', handleStart);
-  //     router.events.off('routeChangeComplete', handleStop);
-  //   };
-  // }, [router]);
-
   return (
     <>
       {m && (

@@ -34,7 +34,6 @@ const Dashboard = () => {
     }
     setLoadingSubmit(false);
   };
-  // console.log('posts ', posts);
 
   return (
     <>
