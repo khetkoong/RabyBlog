@@ -10,6 +10,8 @@ import {
   query,
   limit,
   orderBy,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import {
   getAuth,
@@ -96,8 +98,26 @@ const createPost = async (userOwner, post) => {
     });
     result = true;
     console.log('Document written with ID: ', docRef.id);
-  } catch {
+  } catch (e) {
     console.error('Error adding document: ', e);
+  }
+  return result;
+};
+
+const commentPost = async (userOwner, comment, postId) => {
+  let result = false;
+  try {
+    const commentRef = doc(db, 'posts', postId);
+    await updateDoc(commentRef, {
+      comments: arrayUnion({
+        comment,
+        commentedBy: userOwner,
+      }),
+    });
+    result = true;
+    console.log(`comment this post: ${postId} success`);
+  } catch (e) {
+    console.error('Error adding commentPost: ', e);
   }
   return result;
 };
@@ -129,4 +149,5 @@ export {
   updateProfileName,
   createPost,
   getDataFromDoc,
+  commentPost,
 };
